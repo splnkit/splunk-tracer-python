@@ -35,7 +35,7 @@ class ReportRequest(object):
                 "event": span_dict
             }
             report_objs.append(span_event)
-        return "".join([json.dumps(obj) for obj in report_objs])
+        return "\n".join([json.dumps(obj) for obj in report_objs])
 
 
 class Span(object):

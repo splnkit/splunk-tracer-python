@@ -39,10 +39,13 @@ class HttpConverter(Converter):
         return Reporter(reporter_id=guid, tags=runtime_attrs)
 
     def create_span_record(self, span, guid):
-        span_context = SpanContext(trace_id=span.context.trace_id,
-                                   span_id=span.context.span_id,
-                                   parent_id=span.parent_id)
-        print span.parent_id
+        if span.parent_id:
+            pid = util._id_to_hex(int(span.parent_id))
+        else:
+            pid = span.parent_id
+        span_context = SpanContext(trace_id=util._id_to_hex(int(span.context.trace_id)),
+                                   span_id=util._id_to_hex(int(span.context.span_id)),
+                                   parent_id=pid)
         seconds, nanos = util._time_to_seconds_nanos(span.start_time)
         span_record = Span(span_context=span_context,
                            operation_name=util._coerce_str(span.operation_name),

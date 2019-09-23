@@ -3,14 +3,14 @@
 """
 import threading
 import requests
-# import zlib
-# from StringIO import StringIO
-# import gzip
+import zlib
+
 
 class _HTTPConnection(object):
     """Instances of _Connection are used to establish a connection to the
     server via HTTP protocol.
     """
+    
     def __init__(self, collector_url, timeout_seconds):
         self._collector_url = collector_url
         self._lock = threading.Lock()
@@ -26,26 +26,24 @@ class _HTTPConnection(object):
         """Report to the server."""
         auth = args[0]
         report = args[1]
-        print self._collector_url
         with self._lock:
             try:
-                headers = {# "Content-Type": "application/text",
-#                           "Content-Encoding": 'gzip',
-#                           "Accept": "application/json",
-                           "Authorization": "Splunk %s" % auth}
-                # s = StringIO()
-                # g = gzip.GzipFile(fileobj=s, mode='w')
-                # g.write(report.serialize_to_string())
-                # g.close()
-                r = requests.post(
-                    self._collector_url,
-                    headers=headers,
-                    data=report.serialize_to_string(),  # zlib.compress(report.serialize_to_string()),
-                    timeout=self._timeout_seconds,
-                    verify=False)
-                print report.serialize_to_string()
-                resp = r.content
-                return resp
+                data = report.serialize_to_string()
+                if len(data) > 0:
+                    gzip_compress = zlib.compressobj(9, zlib.DEFLATED, zlib.MAX_WBITS | 16)
+                    payload = gzip_compress.compress(data) + gzip_compress.flush()
+                    headers = {"Content-Type": "application/json",
+                               "Content-Encoding": 'gzip',
+                               "Content-Length": str(len(payload)),
+                               "Authorization": "Splunk %s" % auth}
+                    r = requests.post(
+                        self._collector_url,
+                        headers=headers,
+                        data=payload,
+                        timeout=self._timeout_seconds,
+                        verify=False)
+                    resp = r.content
+                    return resp
             except requests.exceptions.RequestException as err:
                 raise err
 

@@ -40,7 +40,7 @@ class MockConnection(object):
 def recorder(request):
     runtime_args = {'collector_encryption': 'none',
                          'collector_host': 'localhost',
-                         'collector_port': 9998,
+                         'collector_port': 8088,
                          'access_token': '{your_access_token}',
                          'component_name': 'python/runtime_test',
                          'periodic_flush_seconds': 0,
@@ -61,7 +61,7 @@ def check_spans(converter, report):
         self.mock_connection.open()
         self.runtime_args = {'collector_encryption': 'none',
                              'collector_host': 'localhost',
-                             'collector_port': 9998,
+                             'collector_port': 8088,
                              'access_token': '{your_access_token}',
                              'component_name': 'python/runtime_test',
                              'periodic_flush_seconds': 0}
