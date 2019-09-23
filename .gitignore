@@ -1,0 +1,15 @@
+activate/*
+env/*
+docs/_build/*
+build/*
+splunktracing.egg-info/*
+dist/*
+.tox/*
+**.pyc
+.cache/*
+.DS_Store
+**/.DS_Store
+.idea
+.pytest_cache/
+.python-version
+test.py
