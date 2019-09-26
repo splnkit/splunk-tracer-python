@@ -1,8 +1,8 @@
 # splunk-tracer-python
 
-[![PyPI](https://img.shields.io/pypi/v/splunk.svg?maxAge=2592000)]() [![Circle CI](https://circleci.com/gh/lightstep/splunk-tracer-python.svg?style=shield)](https://circleci.com/gh/splunk/splunk-tracer-python) [![MIT license](http://img.shields.io/badge/license-MIT-blue.svg)](http://opensource.org/licenses/MIT)
+[![MIT license](http://img.shields.io/badge/license-MIT-blue.svg)](http://opensource.org/licenses/MIT)
 
-The LightStep distributed tracing library for Python.
+The Splunk distributed tracing library for Python.
 
 ## Installation
 
@@ -69,4 +69,4 @@ if __name__ == "__main__":
 ```
 
 
-This library is the LightStep binding for [OpenTracing](http://opentracing.io/). See the [OpenTracing Python API](https://github.com/opentracing/opentracing-python) for additional detail.
+This library is the Splunk binding for [OpenTracing](http://opentracing.io/). See the [OpenTracing Python API](https://github.com/opentracing/opentracing-python) for additional detail.
