@@ -12,6 +12,8 @@ from basictracer import BasicTracer
 from basictracer.text_propagator import TextPropagator
 from opentracing import Format
 
+from splunktracing.splunk_binary_propagator import SplunkTracingBinaryPropagator
+from splunktracing.propagation import SplunkTracingFormat
 from .recorder import Recorder
 
 
@@ -46,21 +48,31 @@ def Tracer(**kwargs):
         basictracer package, which uses thread-local storage.
     :param float timeout_seconds: Number of seconds allowed for the HTTP report transaction (fractions are permitted)
     """
+    enable_binary_format = True
+    if 'disable_binary_format' in kwargs:
+        enable_binary_format = not kwargs['disable_binary_format']
+        del kwargs['disable_binary_format']
 
     scope_manager = None
     if 'scope_manager' in kwargs:
         scope_manager = kwargs['scope_manager']
         del kwargs['scope_manager']
 
-    return _SplunkTracer(Recorder(**kwargs), scope_manager)
+    return _SplunkTracer(enable_binary_format, Recorder(**kwargs), scope_manager)
 
 
 class _SplunkTracer(BasicTracer):
-    def __init__(self, recorder, scope_manager):
+    def __init__(self, enable_binary_format, recorder, scope_manager):
         """Initialize the Splunk Tracer, deferring to BasicTracer."""
         super(_SplunkTracer, self).__init__(recorder, scope_manager=scope_manager)
         self.register_propagator(Format.TEXT_MAP, TextPropagator())
         self.register_propagator(Format.HTTP_HEADERS, TextPropagator())
+        if enable_binary_format:
+            # We do this import lazily because protobuf versioning issues
+            # can cause process-level failure at import time.
+            from basictracer.binary_propagator import BinaryPropagator
+            self.register_propagator(Format.BINARY, BinaryPropagator())
+            self.register_propagator(SplunkTracingFormat.SPLUNK_BINARY, SplunkTracingBinaryPropagator())
 
     def flush(self):
         """Force a flush of buffered Span data to the Splunk collector."""

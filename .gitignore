@@ -2,7 +2,7 @@ activate/*
 env/*
 docs/_build/*
 build/*
-splunktracing.egg-info/*
+splunk_tracer.egg-info/*
 dist/*
 .tox/*
 **.pyc
