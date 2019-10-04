@@ -15,17 +15,17 @@ class ReportRequest(object):
                 "span_id": span.span_context.span_id,
                 "parent_span_id": span.span_context.parent_id,
                 "operation_name": span.operation_name,
-                "tags": span.tags
+                "tags": span.tags,
+                "baggage": span.span_context.baggage
             }
-            span_dict.update(span.span_context.baggage)
             span_dict.update(self.reporter.tags)
             for log in span.logs:
-                log.update(span_dict)
                 log_event = {
                     "time": log["timestamp"],
                     "sourcetype": "splunktracing:log",
-                    "event": log
+                    "event": {"fields": log , "timestamp": log["timestamp"]}
                 }
+                log_event["event"].update(span_dict)
                 report_objs.append(log_event)
             span_dict["start_timestamp"] = span.start_timestamp
             span_dict["duration_micros"] = span.duration_micros

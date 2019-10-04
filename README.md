@@ -51,7 +51,7 @@ Please see the [example programs](examples/) for examples of how to use this lib
 * [Trivial Example](examples/trivial/main.py) shows how to use the library on a single host.
 * [Context in Headers](examples/http/context_in_headers.py) shows how to pass a `TraceContext` through `HTTP` headers.
 
-Or if your python code is already instrumented for OpenTracing, you can simply switch to LightStep's implementation with:
+Or if your python code is already instrumented for OpenTracing, you can simply switch to Splunk's implementation with:
 
 ```python
 import opentracing
@@ -70,3 +70,17 @@ if __name__ == "__main__":
 
 
 This library is the Splunk binding for [OpenTracing](http://opentracing.io/). See the [OpenTracing Python API](https://github.com/opentracing/opentracing-python) for additional detail.
+
+## License
+
+The Splunk Tracer for Python is licensed under the MIT License. Details can be found in the LICENSE file.
+
+### Third-party libraries
+
+This is a fork of the Python tracer from Lightstep, which is also licensed under the MIT License. Links to the original repository and license are below:
+
+* [lightstep-tracer-python][lightstep]: [MIT][lightstep-license]
+
+[lightstep]:                      https://github.com/lightstep/lightstep-tracer-python
+[lightstep-license]:              https://github.com/lightstep/lightstep-tracer-python/blob/master/LICENSE
+
