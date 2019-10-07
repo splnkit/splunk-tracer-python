@@ -27,8 +27,8 @@ class ReportRequest(object):
                 }
                 log_event["event"].update(span_dict)
                 report_objs.append(log_event)
-            span_dict["start_timestamp"] = span.start_timestamp
-            span_dict["duration_micros"] = span.duration_micros
+            span_dict["timestamp"] = span.start_timestamp
+            span_dict["duration"] = span.duration_micros
             span_event = {
                 "time": span.start_timestamp,
                 "sourcetype": "splunktracing:span",

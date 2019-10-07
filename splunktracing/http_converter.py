@@ -27,7 +27,7 @@ class HttpConverter(Converter):
             'tracer_platform': 'python',
             'tracer_platform_version': python_version,
             'tracer_version': tracer_version.SPLUNK_PYTHON_TRACER_VERSION,
-            'service_name': component_name,
+            'component_name': component_name,
             'guid': util._id_to_hex(guid),
             'device': host_name,
             'ip_address': ip_address
