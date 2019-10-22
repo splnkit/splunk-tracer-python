@@ -8,7 +8,7 @@ The Splunk distributed tracing library for Python.
 
 ```bash
 apt-get install python-dev
-pip install splunktracing
+pip install splunk-tracer
 ```
 
 ## Developer Setup

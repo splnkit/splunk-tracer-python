@@ -10,7 +10,7 @@ class _HTTPConnection(object):
     """Instances of _Connection are used to establish a connection to the
     server via HTTP protocol.
     """
-    
+
     def __init__(self, collector_url, timeout_seconds):
         self._collector_url = collector_url
         self._lock = threading.Lock()
@@ -40,8 +40,7 @@ class _HTTPConnection(object):
                         self._collector_url,
                         headers=headers,
                         data=payload,
-                        timeout=self._timeout_seconds,
-                        verify=False)
+                        timeout=self._timeout_seconds)
                     resp = r.content
                     return resp
             except requests.exceptions.RequestException as err:
